@@ -1,5 +1,6 @@
 package com.plcoding
 
+import com.plcoding.data.remote.OneSignalServiceImpl
 import io.ktor.application.*
 import com.plcoding.plugins.*
 import io.ktor.client.*
@@ -17,5 +18,7 @@ fun Application.module() {
             serializer = KotlinxSerializer()
         }
     }
-    configureRouting()
+    val apiKey = environment.config.property("onesignal.api_key").toString()
+    val service = OneSignalServiceImpl(client, apiKey)
+    configureRouting(service)
 }
